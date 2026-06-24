@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { ALL_SEED, type Lead, type Stage, type RejectReason } from "@/data/leads";
+import { ALL_SEED, REJECT_REASONS, type Lead, type Stage, type RejectReason } from "@/data/leads";
 
-const KEY = "rivoj:leads:v1";
+const KEY = "rivoj:leads:v2";
 const EVENT = "rivoj:leads:changed";
 
 function now(): string {
@@ -36,7 +36,15 @@ export const crmStore = {
     const lead = leads.find((l) => l.id === id);
     if (!lead || lead.stage === stage) return;
     lead.stage = stage;
-    lead.history.push({ text: `Bosqich o'zgardi: ${stage}`, at: now() });
+    if (stage === "otkaz") {
+      lead.rejected = true;
+      if (!lead.rejectReason) lead.rejectReason = REJECT_REASONS[0];
+      lead.history.push({ text: `Otkaz: ${lead.rejectReason}`, at: now() });
+    } else {
+      lead.rejected = false;
+      lead.rejectReason = null;
+      lead.history.push({ text: `Bosqich: ${stage}`, at: now() });
+    }
     write(leads);
   },
   reject(id: string, reason: RejectReason) {
@@ -44,8 +52,9 @@ export const crmStore = {
     const lead = leads.find((l) => l.id === id);
     if (!lead) return;
     lead.rejected = true;
+    lead.stage = "otkaz";
     lead.rejectReason = reason;
-    lead.history.push({ text: `Rad etildi: ${reason}`, at: now() });
+    lead.history.push({ text: `Otkaz: ${reason}`, at: now() });
     write(leads);
   },
   setReason(id: string, reason: RejectReason) {

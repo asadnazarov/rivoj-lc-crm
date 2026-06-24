@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { Plus, UserPlus, Phone, CalendarDays, FileText, GraduationCap, ChevronDown } from "lucide-react";
+import { Plus, UserPlus, Phone, BookOpen, BadgeDollarSign, XCircle, ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { crmStore, useLeads } from "@/lib/crmStore";
 import { STAGES, SOURCES, TEACHERS, type Lead, type Stage } from "@/data/leads";
@@ -9,10 +9,10 @@ import { LeadDialog } from "./LeadDialog";
 
 const STAT_ICON: Record<Stage, typeof UserPlus> = {
   yangi: UserPlus,
-  aloqaga: Phone,
-  probniy: CalendarDays,
-  shartnoma: FileText,
-  faol: GraduationCap,
+  qongiroq: Phone,
+  ochiq: BookOpen,
+  sotuv: BadgeDollarSign,
+  otkaz: XCircle,
 };
 
 interface Props {
@@ -30,7 +30,6 @@ export function Kanban({ search }: Props) {
   const active = useMemo(() => {
     const q = search.trim().toLowerCase();
     return leads.filter((l) =>
-      !l.rejected &&
       (source === "all" || l.source === source) &&
       (teacher === "all" || l.teacher === teacher) &&
       (!q || l.name.toLowerCase().includes(q) || l.phone.includes(q)),
@@ -88,7 +87,7 @@ export function Kanban({ search }: Props) {
                   className="w-[300px] shrink-0 flex flex-col bg-[#F8FAFC] border border-[#EAECEF] overflow-hidden"
                   style={{ borderRadius: 16 }}
                 >
-                  <span className="h-1 bg-[#00C853]" />
+                  <span className="h-1" style={{ background: s.id === "otkaz" ? "#EF4444" : "#00C853" }} />
                   <div className="h-[52px] flex items-center justify-between px-3.5 border-b border-[#EAECEF] bg-white">
                     <div className="flex items-center gap-2">
                       <span className="text-sm font-semibold text-[#111827]">{s.label}</span>
