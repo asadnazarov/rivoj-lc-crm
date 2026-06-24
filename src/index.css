@@ -1,0 +1,96 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Rivoj LC design system. All colors HSL. Green accent + airy light-gray neutrals. */
+
+@layer base {
+  :root {
+    /* page bg #F8FAFC, text gray-900 #111827 */
+    --background: 210 40% 98%;
+    --foreground: 222 47% 11%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+
+    /* primary green #00C853 */
+    --primary: 147 100% 39%;
+    --primary-foreground: 0 0% 100%;
+    /* hover #00B248 / dark #005C46 */
+    --primary-hover: 147 100% 35%;
+    --primary-dark: 162 100% 18%;
+
+    /* secondary = gray-100 #F5F6F8 with gray-700 text #374151 */
+    --secondary: 220 17% 96%;
+    --secondary-foreground: 215 25% 27%;
+
+    --muted: 220 17% 96%;
+    --muted-foreground: 220 9% 46%;
+
+    /* accent = mint #EAFBF1 */
+    --accent: 146 64% 95%;
+    --accent-foreground: 162 100% 18%;
+
+    --brand: 147 100% 39%;
+    --brand-foreground: 0 0% 100%;
+    --brand-soft: 146 64% 95%;
+
+    --success: 147 100% 39%;
+    --success-soft: 146 64% 95%;
+    --warning: 38 92% 50%;
+    --warning-soft: 38 92% 95%;
+    --danger: 0 84% 60%;
+    --danger-soft: 0 84% 97%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    /* border #EAECEF */
+    --border: 216 14% 92%;
+    --input: 216 14% 92%;
+    --ring: 147 100% 39%;
+
+    /* card radius 16px; button/input use calc to 12px */
+    --radius: 1rem;
+
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 215 25% 27%;
+    --sidebar-primary: 147 100% 39%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 146 64% 95%;
+    --sidebar-accent-foreground: 162 100% 18%;
+    --sidebar-border: 216 14% 92%;
+    --sidebar-ring: 147 100% 39%;
+
+    --shadow-soft: 0 2px 8px 0 hsl(222 47% 11% / 0.04);
+    --shadow-elevated: 0 10px 30px -4px hsl(222 47% 11% / 0.08);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "cv11", "ss01";
+  }
+  html {
+    font-family: 'Inter', 'Manrope', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  }
+}
+
+@layer utilities {
+  .num {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum";
+  }
+  .shadow-soft { box-shadow: var(--shadow-soft); }
+  .shadow-elevated { box-shadow: var(--shadow-elevated); }
+  .scrollbar-thin::-webkit-scrollbar { height: 8px; width: 8px; }
+  .scrollbar-thin::-webkit-scrollbar-thumb { background: hsl(216 14% 88%); border-radius: 8px; }
+  .scrollbar-thin::-webkit-scrollbar-track { background: transparent; }
+}
