@@ -520,16 +520,6 @@ export function Moliya() {
           );
         })}
         <div className="ml-auto flex gap-2">
-          <button onClick={function() { setShowOnlineForm(!showOnlineForm); setOnlineResult(null); if (showForm) setShowForm(false); if (showRejadagiForm) setShowRejadagiForm(false); }}
-            className={cn("px-4 py-1.5 rounded-lg text-sm font-medium transition inline-flex items-center gap-2", showOnlineForm ? "bg-primary text-primary-foreground" : "bg-secondary text-muted-foreground hover:text-foreground")}>
-            {showOnlineForm ? <X className="h-4 w-4" /> : <Globe className="h-4 w-4" />}
-            {showOnlineForm ? "Yopish" : "Online to'lov"}
-          </button>
-          <button onClick={function() { setShowRejadagiForm(!showRejadagiForm); setRejResult(null); if (showForm) setShowForm(false); if (showOnlineForm) setShowOnlineForm(false); }}
-            className={cn("px-4 py-1.5 rounded-lg text-sm font-medium transition inline-flex items-center gap-2", showRejadagiForm ? "bg-primary text-primary-foreground" : "bg-secondary text-muted-foreground hover:text-foreground")}>
-            {showRejadagiForm ? <X className="h-4 w-4" /> : <CalendarClock className="h-4 w-4" />}
-            {showRejadagiForm ? "Yopish" : "Rejadagi xarajat"}
-          </button>
           <button onClick={function() { setShowForm(!showForm); setFormResult(null); if (showRejadagiForm) setShowRejadagiForm(false); if (showOnlineForm) setShowOnlineForm(false); }}
             className={cn("px-4 py-1.5 rounded-lg text-sm font-medium transition inline-flex items-center gap-2", showForm ? "bg-primary text-primary-foreground" : "bg-emerald-600 text-white hover:bg-emerald-700")}>
             {showForm ? <X className="h-4 w-4" /> : <Plus className="h-4 w-4" />}
@@ -538,21 +528,6 @@ export function Moliya() {
         </div>
       </div>
 
-      {showOnlineForm && (
-        <div className="bg-card rounded-2xl border border-border p-5 shadow-soft mb-6">
-          <h3 className="font-semibold mb-4 flex items-center gap-2"><Globe className="h-4 w-4" />Online to'lov qo'shish</h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
-            <div><label className="text-xs text-muted-foreground mb-1 block">Ism Familya</label><input type="text" value={onlineIsm} onChange={function(e) { setOnlineIsm(e.target.value); }} className="w-full px-3 py-2 rounded-lg border border-border bg-background text-sm" /></div>
-            <div><label className="text-xs text-muted-foreground mb-1 block">Telefon raqami</label><input type="tel" placeholder="+998 90 000 00 00" value={onlineTelefon} onChange={function(e) { setOnlineTelefon(e.target.value); }} className="w-full px-3 py-2 rounded-lg border border-border bg-background text-sm" /></div>
-            <div><label className="text-xs text-muted-foreground mb-1 block">Summa (so'm)</label><input type="text" value={onlineSumma} onChange={function(e) { setOnlineSumma(formatSummaInput(e.target.value)); }} className="w-full px-3 py-2 rounded-lg border border-border bg-background text-sm" /></div>
-            <div><label className="text-xs text-muted-foreground mb-1 block">Sana</label><input type="date" value={onlineSana} onChange={function(e) { setOnlineSana(e.target.value); }} className="w-full px-3 py-2 rounded-lg border border-border bg-background text-sm" /></div>
-          </div>
-          <button onClick={submitOnline} disabled={onlineLoading} className="px-6 py-2 bg-secondary text-foreground rounded-lg text-sm font-medium hover:bg-secondary/80 transition disabled:opacity-50 inline-flex items-center gap-2">
-            {onlineLoading ? <><Loader2 className="h-4 w-4 animate-spin" />Saqlanmoqda</> : "Saqlash"}
-          </button>
-          {onlineResult && <div className={cn("mt-4 p-3 rounded-xl text-sm font-medium inline-block ml-3", onlineResult.startsWith("Saqlandi") ? "text-emerald-700" : "text-red-600")}>{onlineResult}</div>}
-        </div>
-      )}
 
       {showForm && (
         <div className="bg-card rounded-2xl border border-border p-5 shadow-soft mb-6">
@@ -575,21 +550,6 @@ export function Moliya() {
         </div>
       )}
 
-      {showRejadagiForm && (
-        <div className="bg-card rounded-2xl border border-border p-5 shadow-soft mb-6">
-          <h3 className="font-semibold mb-4 flex items-center gap-2"><CalendarClock className="h-4 w-4" />Rejadagi xarajat qo'shish</h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
-            <div><label className="text-xs text-muted-foreground mb-1 block">Xarajat nomi</label><input type="text" placeholder="Ijara, Maosh..." value={rejNomi} onChange={function(e) { setRejNomi(e.target.value); }} className="w-full px-3 py-2 rounded-lg border border-border bg-background text-sm" /></div>
-            <div><label className="text-xs text-muted-foreground mb-1 block">Sana / Oy</label><input type="date" value={rejSana} onChange={function(e) { setRejSana(e.target.value); }} className="w-full px-3 py-2 rounded-lg border border-border bg-background text-sm" /></div>
-            <div><label className="text-xs text-muted-foreground mb-1 block">Summa (so'm)</label><input type="text" value={rejSumma} onChange={function(e) { setRejSumma(formatSummaInput(e.target.value)); }} className="w-full px-3 py-2 rounded-lg border border-border bg-background text-sm" /></div>
-            <div><label className="text-xs text-muted-foreground mb-1 block">Izoh</label><input type="text" value={rejIzoh} onChange={function(e) { setRejIzoh(e.target.value); }} className="w-full px-3 py-2 rounded-lg border border-border bg-background text-sm" /></div>
-          </div>
-          <button onClick={submitRejadagi} disabled={rejLoading} className="px-6 py-2 bg-primary text-primary-foreground rounded-lg text-sm font-medium hover:opacity-90 transition disabled:opacity-50 inline-flex items-center gap-2">
-            {rejLoading ? <><Loader2 className="h-4 w-4 animate-spin" />Saqlanmoqda</> : "Saqlash"}
-          </button>
-          {rejResult && <div className={cn("mt-4 p-3 rounded-xl text-sm font-medium inline-block ml-3", rejResult.startsWith("Saqlandi") ? "text-emerald-700" : "text-red-600")}>{rejResult}</div>}
-        </div>
-      )}
 
       <div className={cn("rounded-2xl p-5 shadow-soft border mb-4", totalProfit < 0 ? "border-red-200 bg-gradient-to-br from-red-50 to-white" : "border-purple-100 bg-gradient-to-br from-purple-50 to-white")}>
         <div className="flex items-center justify-between">
@@ -620,212 +580,7 @@ export function Moliya() {
         </div>
       </div>
 
-      <div className="bg-card rounded-2xl border border-border shadow-soft mb-6 overflow-hidden">
-        <button onClick={function() { setTaqsimOpen(function(v) { return !v; }); }} className="w-full flex items-center justify-between px-5 py-4 hover:bg-secondary/40 transition">
-          <div className="flex items-center gap-3 flex-wrap">
-            <div className="flex items-center gap-2">
-              <span className="font-semibold text-sm">Pul taqsimoti</span>
-              <button onClick={function(e) { e.stopPropagation(); setTahlilOpen(function(v) { return !v; }); setTaqsimOpen(true); }} className="h-5 w-5 rounded-full bg-muted flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition">
-                <Info className="h-3 w-3" />
-              </button>
-            </div>
-            <div className="flex items-center gap-1.5 flex-wrap">
-              {priorityId && (
-                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-orange-100 text-orange-700 text-xs font-medium">
-                  <Target className="h-3 w-3" />Qo'lda prioritet
-                </span>
-              )}
-              {xatarliSon > 0 && (
-                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-red-100 text-red-700 text-xs font-medium">
-                  <AlertTriangle className="h-3 w-3" />{xatarliSon} xatar
-                </span>
-              )}
-              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700 text-xs font-medium">
-                <CheckCircle2 className="h-3 w-3" />{yetarliSon}/{taqsim.items.length} yopildi
-              </span>
-              <span className="text-xs text-muted-foreground">· ~{fmt(taqsim.kunlikKirim)}/kun</span>
-            </div>
-          </div>
-          {taqsimOpen ? <ChevronUp className="h-4 w-4 text-muted-foreground shrink-0" /> : <ChevronDown className="h-4 w-4 text-muted-foreground shrink-0" />}
-        </button>
 
-        {taqsimOpen && tahlilOpen && (
-          <div className="mx-5 mb-3 p-4 rounded-xl border border-blue-200 bg-blue-50 text-xs text-blue-900">
-            <p className="font-semibold mb-2">Nima asosida taqsimlanyapti?</p>
-            <p className="mb-2">Kassaning 14% sanasiz xarajatlarga teng taqsimlanadi. 86% sanali xarajatlarga kaskad usulida.</p>
-            <p className="mb-1">🟢 To'q yashil = haqiqatda to'langan · 🟩 Och yashil = kassadan zaxiralangan</p>
-            <p className="mb-1">🎯 Qo'lda prioritet = barcha 86% o'sha xarajatga boradi</p>
-            <p className="text-blue-700">🔴 Kechikmoqda = sana o'tib ketgan, hali to'lanmagan</p>
-          </div>
-        )}
-
-        {taqsimOpen && (
-          <div className="px-5 pb-5">
-            {priorityId && (
-              <div className="mb-3 p-3 rounded-xl border border-orange-200 bg-orange-50 flex items-center justify-between">
-                <span className="text-xs text-orange-700 font-medium flex items-center gap-1.5">
-                  <Target className="h-3.5 w-3.5" />
-                  Prioritet rejimi yoqilgan — barcha pul bitta xarajatga yo'naltirilmoqda
-                </span>
-                <button onClick={function() { setPriority(null); }} className="text-xs text-orange-600 hover:text-orange-800 font-semibold px-2 py-1 rounded-lg hover:bg-orange-100 transition">
-                  Bekor qilish
-                </button>
-              </div>
-            )}
-            <div className="space-y-2">
-              {taqsim.items.map(function(v) {
-                const isGreen = v.tolanganReal || v.foiz >= 100;
-                const isXatar = !v.tolanganReal && v.foiz < 100 && v.hasDate && (v.kunQoldi <= 3 || v.kechikkan);
-                const bgClass = v.isPriority && !v.tolanganReal
-                  ? "border-orange-300 bg-orange-50"
-                  : isGreen
-                    ? "border-emerald-200 bg-emerald-50"
-                    : isXatar
-                      ? "border-red-200 bg-red-50"
-                      : "border-border bg-background";
-
-                return (
-                  <div key={v.id} className={cn("p-3 rounded-xl border", bgClass)}>
-                    <div className="flex items-center justify-between mb-1.5">
-                      <div className="flex items-center gap-2 min-w-0">
-                        {v.isPriority && !v.tolanganReal
-                          ? <Target className="h-3.5 w-3.5 text-orange-500 shrink-0" />
-                          : isGreen
-                            ? <CheckCircle2 className="h-3.5 w-3.5 text-emerald-500 shrink-0" />
-                            : <Clock className={cn("h-3.5 w-3.5 shrink-0", isXatar ? "text-red-500" : "text-muted-foreground")} />}
-                        <span className={cn(
-                          "font-medium text-sm truncate",
-                          v.tolanganReal ? "line-through text-emerald-600" :
-                          isGreen ? "text-emerald-700" :
-                          v.isPriority ? "text-orange-700 font-semibold" : ""
-                        )}>{v.nomi}</span>
-                        {v.tolanganReal && <span className="text-xs text-emerald-600 font-semibold shrink-0 ml-1">To'landi</span>}
-                        {!v.tolanganReal && isGreen && <span className="text-xs text-emerald-600 font-semibold shrink-0 ml-1">Kassada bor</span>}
-                        {v.isPriority && !v.tolanganReal && <span className="text-xs text-orange-600 font-semibold shrink-0 ml-1">Prioritet</span>}
-                        {v.kechikkan && !v.tolanganReal && (
-                          <span className="text-xs text-red-600 font-semibold shrink-0 ml-1 inline-flex items-center gap-0.5">
-                            <AlertTriangle className="h-3 w-3" />Kechikmoqda
-                          </span>
-                        )}
-                      </div>
-                      <div className="flex items-center gap-2 shrink-0 ml-2">
-                        <span className="text-xs text-muted-foreground whitespace-nowrap">
-                          {v.hasDate ? (v.targetKun === 31 ? "Oy oxiri" : v.targetKun + "-kun") : "Oy davomida"}
-                          {v.hasDate && !v.kechikkan && " · " + v.kunQoldi + " kun qoldi"}
-                          {v.hasDate && v.kechikkan && !v.tolanganReal && " · to'lanmagan"}
-                        </span>
-                        {!v.tolanganReal && (
-                          <button
-                            onClick={function() { setPriority(v.isPriority ? null : v.id); }}
-                            className={cn(
-                              "h-6 w-6 rounded-md flex items-center justify-center transition",
-                              v.isPriority ? "bg-orange-500 text-white" : "bg-secondary text-muted-foreground hover:bg-orange-100 hover:text-orange-600"
-                            )}
-                            title={v.isPriority ? "Prioritetni olib tashlash" : "Prioritet qilish"}
-                          >
-                            <Target className="h-3 w-3" />
-                          </button>
-                        )}
-                      </div>
-                    </div>
-
-                    <div className="h-2 rounded-full bg-secondary overflow-hidden mb-1">
-                      <div className="h-full flex">
-                        {v.foizReal > 0 && (
-                          <div className="h-full bg-emerald-600 transition-all" style={{ width: v.foizReal + "%" }} />
-                        )}
-                        {v.foizKassa > 0 && (
-                          <div className="h-full bg-emerald-300 transition-all" style={{ width: v.foizKassa + "%" }} />
-                        )}
-                      </div>
-                    </div>
-
-                    <div className="flex items-center justify-between text-xs">
-                      <span className="num text-muted-foreground flex items-center gap-2">
-                        {v.tolanganSumma > 0 && (
-                          <span className="inline-flex items-center gap-1">
-                            <span className="inline-block h-2 w-2 rounded-sm bg-emerald-600" />
-                            {fmtFull(v.tolanganSumma)}
-                          </span>
-                        )}
-                        {v.toplangan > 0 && !v.tolanganReal && (
-                          <span className="inline-flex items-center gap-1">
-                            <span className="inline-block h-2 w-2 rounded-sm bg-emerald-300" />
-                            {fmtFull(v.toplangan)}
-                          </span>
-                        )}
-                        <span className="text-muted-foreground">/ {fmtFull(v.kerak)} so'm</span>
-                      </span>
-                      <span className={cn("font-semibold",
-                        isGreen ? "text-emerald-600" :
-                        v.isPriority ? "text-orange-600" :
-                        isXatar ? "text-red-500" :
-                        "text-muted-foreground")}>
-                        {v.foiz}%{!isGreen ? " · " + fmtFull(v.kerak - v.tolanganSumma - v.toplangan) + " kerak" : " ✓"}
-                      </span>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-            <div className="flex items-center justify-between pt-3 mt-2 border-t border-border">
-              <span className="text-xs text-muted-foreground">Kassada qolgan pul (sof foyda)</span>
-              <span className={cn("num font-bold text-sm", taqsim.qolgan > 0 ? "text-emerald-600" : "text-muted-foreground")}>{fmt(taqsim.qolgan)}</span>
-            </div>
-          </div>
-        )}
-      </div>
-
-      <div className="bg-card rounded-2xl border border-border p-5 shadow-soft mb-6">
-        <div className="flex items-center justify-between mb-4">
-          <div>
-            <h3 className="font-semibold">Rejadagi xarajatlar</h3>
-            <p className="text-xs text-muted-foreground mt-0.5">Joriy sof foyda: <span className={cn("font-semibold", totalProfit < 0 ? "text-red-500" : "")}>{totalProfit < 0 ? "-" : ""}{fmt(totalProfit)}</span></p>
-          </div>
-        </div>
-        {rejadagiLoading ? (
-          <div className="flex items-center gap-2 text-muted-foreground text-sm py-4"><Loader2 className="h-4 w-4 animate-spin" /><span>Yuklanmoqda</span></div>
-        ) : rejadagi.length === 0 ? (
-          <p className="text-sm text-muted-foreground text-center py-6">Rejadagi xarajatlar yo'q</p>
-        ) : (
-          <div className="space-y-2">
-            {rejadagi.map(function(item, i) {
-              const covered = totalProfit >= item.summa;
-              return (
-                <div key={i} className={cn("flex items-center justify-between p-4 rounded-xl border transition", covered ? "border-emerald-200 bg-emerald-50" : "border-red-200 bg-red-50")}>
-                  <div className="flex items-center gap-3">
-                    {covered ? <CheckCircle2 className="h-5 w-5 text-emerald-500 shrink-0" /> : <Clock className="h-5 w-5 text-red-400 shrink-0" />}
-                    <div>
-                      <p className={cn("font-semibold text-sm", covered ? "text-emerald-900" : "text-red-900")}>{item.nomi}</p>
-                      <p className={cn("text-xs mt-0.5", covered ? "text-emerald-600" : "text-red-500")}>{item.sana}{item.izoh ? " · " + item.izoh : ""}</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <p className={cn("num font-bold text-sm", covered ? "text-emerald-700" : "text-red-600")}>{fmt(item.summa)}</p>
-                    {covered && (
-                      <button onClick={function() { tolovQilindi(item, i); }} disabled={tolovLoading === i} className="px-3 py-1.5 bg-emerald-600 text-white rounded-lg text-xs font-medium hover:bg-emerald-700 transition disabled:opacity-50 inline-flex items-center gap-1.5 whitespace-nowrap">
-                        {tolovLoading === i ? <Loader2 className="h-3 w-3 animate-spin" /> : <CheckCircle2 className="h-3 w-3" />}
-                        To'landi
-                      </button>
-                    )}
-                  </div>
-                </div>
-              );
-            })}
-            <div className="flex items-center justify-between pt-3 border-t border-border mt-2">
-              <span className="text-xs font-semibold text-muted-foreground">Jami rejadagi xarajatlar</span>
-              <span className="num font-bold text-sm">{fmt(rejadagi.reduce(function(s, r) { return s + r.summa; }, 0))}</span>
-            </div>
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-semibold text-muted-foreground">Xarajatlardan keyin qoladi</span>
-              <span className={cn("num font-bold text-sm", totalProfit - rejadagi.reduce(function(s, r) { return s + r.summa; }, 0) >= 0 ? "text-emerald-600" : "text-red-500")}>
-                {totalProfit - rejadagi.reduce(function(s, r) { return s + r.summa; }, 0) < 0 ? "-" : ""}
-                {fmt(totalProfit - rejadagi.reduce(function(s, r) { return s + r.summa; }, 0))}
-              </span>
-            </div>
-          </div>
-        )}
-      </div>
 
       {modalFilial && modalData && (
         <div className="fixed inset-0 bg-foreground/30 backdrop-blur-sm z-50 flex items-center justify-center p-4">
